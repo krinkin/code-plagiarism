@@ -2,9 +2,6 @@ import os
 import sys
 import argparse
 
-# 0 mode works with GitHub repositoryes
-# 1 mode works with directory in user computer
-
 def get_mode():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', "--file", type=str, 
@@ -36,12 +33,17 @@ def get_mode():
         directory = '/py'
     else:
         if not os.path.exists(directory):
-            print('Directory {directory} isn\'t exist')
+            print('Directory '+ directory + ' doesn\'t exist')
+            exit()
+
+    if file_path:
+        if not os.path.exists(file_path):
+            print('File ' + file_path + ' doesn\'t exist')
             exit()
 
 
     if len(sys.argv) == 1:
-        exit()
+        mode = -1
     elif args.file and args.git and not (args.git_file or args.dir or args.project or args.git_project):
         print("Local file comapres with files in git repositories")
         mode = 0
